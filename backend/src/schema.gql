@@ -15,13 +15,6 @@ type MenuItem {
   restaurantId: String!
 }
 
-type Order {
-  id: ID!
-  status: String!
-  country: String!
-  userId: String!
-}
-
 type Query {
   sayHello: String!
   getRestaurants: [Restaurant!]!
@@ -30,5 +23,5 @@ type Query {
 
 type Mutation {
   login(email: String!, password: String!): String!
-  createOrder: Order!
+  addItemToOrder(orderId: String!, menuItemId: String!, quantity: Float!): String!
 }
