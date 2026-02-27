@@ -2,8 +2,15 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Restaurant {
+  id: ID!
+  name: String!
+  country: String!
+}
+
 type Query {
   sayHello: String!
+  getRestaurants: [Restaurant!]!
 }
 
 type Mutation {
