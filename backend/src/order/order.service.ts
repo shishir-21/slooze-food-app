@@ -9,15 +9,27 @@ export class OrderService {
   constructor(private prisma: PrismaService) {}
 
   // Create new order
- async createOrder(user: any) {
-  console.log("DEBUG: User object from Guard ->", user); // Look at your terminal after running the mutation
-  
-  return this.prisma.order.create({
+ async addItemToOrder(
+  orderId: string,
+  menuItemId: string,
+  quantity: number,
+  user: any
+) {
+  // 1. Pehle check karein ki order exist karta hai aur usi user ka hai
+  const order = await this.prisma.order.findUnique({
+    where: { id: orderId }
+  });
+
+  if (!order || order.userId !== user.userId) {
+    throw new Error("Unauthorized order access or Order not found");
+  }
+
+  // 2. OrderItem table mein entry create karein
+  return this.prisma.orderItem.create({
     data: {
-      user: {
-        connect: { id: user.userId } // We need to check if it's user.userId or user.id
-      },
-      country: user.country,
+      orderId,
+      menuItemId,
+      quantity
     }
   });
 }
