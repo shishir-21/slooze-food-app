@@ -1,0 +1,101 @@
+// prisma/schema.prisma
+
+// Define datasource (PostgreSQL)
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Prisma client generator
+generator client {
+  provider = "prisma-client-js"
+}
+
+// ---------------- ENUMS ----------------
+
+// Role based access
+enum Role {
+  ADMIN
+  MANAGER
+  MEMBER
+}
+
+// Country restriction
+enum Country {
+  INDIA
+  AMERICA
+}
+
+// Order status
+enum OrderStatus {
+  CREATED
+  PAID
+  CANCELLED
+}
+
+// ---------------- MODELS ----------------
+
+// User table
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role
+  country   Country
+
+  orders    Order[]
+  payments  PaymentMethod[]
+
+  createdAt DateTime @default(now())
+}
+
+// Restaurant table
+model Restaurant {
+  id       String   @id @default(uuid())
+  name     String
+  country  Country
+
+  menuItems MenuItem[]
+}
+
+// Menu items for restaurant
+model MenuItem {
+  id           String   @id @default(uuid())
+  name         String
+  price        Float
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurantId String
+  orderItems   OrderItem[]
+}
+
+// Order table
+model Order {
+  id        String      @id @default(uuid())
+  user      User        @relation(fields: [userId], references: [id])
+  userId    String
+  status    OrderStatus @default(CREATED)
+  country   Country
+
+  orderItems OrderItem[]
+  createdAt  DateTime @default(now())
+}
+
+// Order items
+model OrderItem {
+  id        String   @id @default(uuid())
+  order     Order    @relation(fields: [orderId], references: [id])
+  orderId   String
+  menuItem  MenuItem @relation(fields: [menuItemId], references: [id])
+  menuItemId String
+  quantity  Int
+}
+
+// Payment method
+model PaymentMethod {
+  id        String  @id @default(uuid())
+  cardNumber String
+  expiry     String
+  user       User   @relation(fields: [userId], references: [id])
+  userId     String
+}
