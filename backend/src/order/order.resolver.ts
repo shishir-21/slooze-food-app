@@ -12,13 +12,24 @@ export class OrderResolver {
 
   constructor(private orderService: OrderService) {}
 
-  @Mutation(() => Order)
+  @Mutation(() => String)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('ADMIN', 'MANAGER', 'MEMBER')
-  createOrder(@Context() context) {
+  @Roles('ADMIN', 'MANAGER', 'MEMBER') // Teeno roles item add kar sakte hain
+async addItemToOrder(
+  @Args('orderId') orderId: string,
+  @Args('menuItemId') menuItemId: string,
+  @Args('quantity') quantity: number,
+  @Context() context
+) {
+  const user = context.req.user; // JWT token se user info nikaali
 
-    const user = context.req.user;
+  await this.orderService.addItemToOrder(
+    orderId,
+    menuItemId,
+    quantity,
+    user
+  );
 
-    return this.orderService.createOrder(user);
-  }
+  return "Item added successfully";
+}
 }
