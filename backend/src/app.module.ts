@@ -7,6 +7,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { RestaurantModule } from './restaurant/restaurant.module';
+import { MenuModule } from './menu/menu.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { RestaurantModule } from './restaurant/restaurant.module';
       context: ({ req }) => ({ req }),
     }),
     RestaurantModule,
+    MenuModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -58,6 +58,16 @@ async function main() {
     ]
   });
 
+  // ---------------- RESTAURANTS (STEP 6) ----------------
+  await prisma.restaurant.createMany({
+  data: [
+    { name: "Taj Hotel", country: Country.INDIA },
+    { name: "Delhi Diner", country: Country.INDIA },
+    { name: "NYC Bites", country: Country.AMERICA },
+    { name: "Texas Grill", country: Country.AMERICA },
+  ]
+});
+
   console.log("Seeded Users Successfully");
 }
 
