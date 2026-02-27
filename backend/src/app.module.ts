@@ -6,6 +6,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { RestaurantModule } from './restaurant/restaurant.module';
 
 @Module({
   imports: [
@@ -18,7 +19,10 @@ import { PrismaModule } from './prisma/prisma.module';
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       playground: true,
+      // IMPORTANT: Required for JWT + RBAC
+      context: ({ req }) => ({ req }),
     }),
+    RestaurantModule,
   ],
   controllers: [AppController],
   providers: [AppService],
