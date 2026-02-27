@@ -15,31 +15,38 @@ export class AuthService {
 
   async login(email: string, password: string) {
 
-    // Find user by email
-    const user = await this.prisma.user.findUnique({
-      where: { email }
-    });
+  // Find user by email
+  const user = await this.prisma.user.findUnique({
+    where: { email }
+  });
 
-    if (!user) {
-      throw new UnauthorizedException("Invalid credentials");
-    }
+  console.log("User from DB:", user);
 
-    // Compare password
-    const isValid = await bcrypt.compare(password, user.password);
-
-    if (!isValid) {
-      throw new UnauthorizedException("Invalid credentials");
-    }
-
-    // Generate JWT token
-    const token = this.jwtService.sign({
-      userId: user.id,
-      role: user.role,
-      country: user.country
-    });
-
-    return {
-      access_token: token
-    };
+  if (!user) {
+    throw new UnauthorizedException("Invalid credentials");
   }
+
+  console.log("Entered password:", password);
+  console.log("Stored hashed password:", user.password);
+
+  // Compare password
+  const isValid = await bcrypt.compare(password, user.password);
+
+  console.log("Password match result:", isValid);
+
+  if (!isValid) {
+    throw new UnauthorizedException("Invalid credentials");
+  }
+
+  // Generate JWT token
+  const token = this.jwtService.sign({
+    userId: user.id,
+    role: user.role,
+    country: user.country
+  });
+
+  return {
+    access_token: token
+  };
+}
 }

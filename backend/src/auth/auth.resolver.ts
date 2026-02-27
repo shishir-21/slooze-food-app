@@ -1,12 +1,16 @@
-import { Resolver, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
 
 @Resolver()
 export class AuthResolver {
-
   constructor(private authService: AuthService) {}
 
-  // Login mutation
+  // Yeh dummy query schema generation error ko fix karegi
+  @Query(() => String)
+  sayHello(): string {
+    return 'Hello Slooze!';
+  }
+
   @Mutation(() => String)
   async login(
     @Args('email') email: string,
