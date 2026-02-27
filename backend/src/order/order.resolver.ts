@@ -9,26 +9,37 @@ import { Roles } from '../auth/decorators/roles.decorator';
 @Resolver(() => Order)
 export class OrderResolver {
 
-  constructor(private orderService: OrderService) {}
+  constructor(private orderService: OrderService) { }
 
   @Mutation(() => String)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('ADMIN', 'MANAGER', 'MEMBER') // Teeno roles item add kar sakte hain
-async addItemToOrder(
-  @Args('orderId') orderId: string,
-  @Args('menuItemId') menuItemId: string,
-  @Args('quantity') quantity: number,
-  @Context() context
-) {
-  const user = context.req.user; // JWT token se user info nikaali
+  @Roles('ADMIN', 'MANAGER', 'MEMBER')
+  async addItemToOrder(
+    @Args('orderId') orderId: string,
+    @Args('menuItemId') menuItemId: string,
+    @Args('quantity') quantity: number,
+    @Context() context
+  ) {
+    const user = context.req.user;
 
-  await this.orderService.addItemToOrder(
-    orderId,
-    menuItemId,
-    quantity,
-    user
-  );
+    await this.orderService.addItemToOrder(
+      orderId,
+      menuItemId,
+      quantity,
+      user
+    );
 
-  return "Item added successfully";
-}
+    return "Item added successfully";
+  }
+
+  @Mutation(() => Order)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('ADMIN', 'MANAGER') // Member NOT allowed
+  checkoutOrder(
+    @Args('orderId') orderId: string,
+    @Context() context
+  ) {
+    const user = context.req.user;
+    return this.orderService.checkoutOrder(orderId, user);
+  }
 }
