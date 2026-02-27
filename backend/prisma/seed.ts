@@ -68,6 +68,21 @@ async function main() {
   ]
 });
 
+// ---------------- MENU ITEMS ----------------
+  // Fetching all restaurants to assign menu items to them
+  const restaurants = await prisma.restaurant.findMany();
+
+  for (const restaurant of restaurants) {
+    await prisma.menuItem.createMany({
+      data: [
+        { name: "Burger", price: 10, restaurantId: restaurant.id },
+        { name: "Pizza", price: 15, restaurantId: restaurant.id }
+      ]
+    });
+  }
+
+  console.log("Seeded Menu Items Successfully");
+
   console.log("Seeded Users Successfully");
 }
 

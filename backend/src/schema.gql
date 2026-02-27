@@ -8,9 +8,17 @@ type Restaurant {
   country: String!
 }
 
+type MenuItem {
+  id: ID!
+  name: String!
+  price: Float!
+  restaurantId: String!
+}
+
 type Query {
   sayHello: String!
   getRestaurants: [Restaurant!]!
+  getMenu(restaurantId: String!): [MenuItem!]!
 }
 
 type Mutation {
