@@ -42,4 +42,16 @@ export class OrderResolver {
     const user = context.req.user;
     return this.orderService.checkoutOrder(orderId, user);
   }
+  
+  @Mutation(() => Order)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('ADMIN', 'MANAGER') // Member not allowed
+  cancelOrder(
+    @Args('orderId') orderId: string,
+    @Context() context
+  ) {
+    const user = context.req.user;
+    return this.orderService.cancelOrder(orderId, user);
+  }
+
 }
