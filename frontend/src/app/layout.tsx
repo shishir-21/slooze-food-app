@@ -1,6 +1,14 @@
-import { AuthProvider } from "@/context/AuthContext";
+"use client";
+
+import "./globals.css";
 import { ApolloProvider } from "@apollo/client";
 import { client } from "@/lib/apollo";
+import { AuthProvider } from "@/context/AuthContext";
+
+export const metadata = {
+  title: "Food Ordering App",
+  description: "Role Based Food Ordering System",
+};
 
 export default function RootLayout({
   children,
@@ -11,7 +19,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ApolloProvider client={client}>
-          <AuthProvider>{children}</AuthProvider>
+          <AuthProvider>
+            {children}
+          </AuthProvider>
         </ApolloProvider>
       </body>
     </html>
