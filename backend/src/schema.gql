@@ -22,6 +22,13 @@ type Order {
   userId: String!
 }
 
+type PaymentMethod {
+  id: ID!
+  cardNumber: String!
+  expiry: String!
+  userId: String!
+}
+
 type Query {
   sayHello: String!
   getRestaurants: [Restaurant!]!
@@ -33,4 +40,6 @@ type Mutation {
   addItemToOrder(orderId: String!, menuItemId: String!, quantity: Float!): String!
   checkoutOrder(orderId: String!): Order!
   cancelOrder(orderId: String!): Order!
+  addPaymentMethod(cardNumber: String!, expiry: String!): PaymentMethod!
+  updatePaymentMethod(id: String!, cardNumber: String!, expiry: String!): PaymentMethod!
 }
