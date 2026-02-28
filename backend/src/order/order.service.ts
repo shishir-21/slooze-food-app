@@ -15,7 +15,7 @@ export class OrderService {
         quantity: number,
         user: any
     ) {
-        // 1. Pehle check karein ki order exist karta hai aur usi user ka hai
+
         const order = await this.prisma.order.findUnique({
             where: { id: orderId }
         });
@@ -24,7 +24,7 @@ export class OrderService {
             throw new Error("Unauthorized order access or Order not found");
         }
 
-        // 2. OrderItem table mein entry create karein
+
         return this.prisma.orderItem.create({
             data: {
                 orderId,
@@ -53,6 +53,27 @@ export class OrderService {
         return this.prisma.order.update({
             where: { id: orderId },
             data: { status: 'PAID' }
+        });
+    }
+
+    // Cancel order
+    async cancelOrder(orderId: string, user: any) {
+
+        const order = await this.prisma.order.findUnique({
+            where: { id: orderId }
+        });
+
+        if (!order) {
+            throw new Error("Order not found");
+        }
+
+        if (user.role !== 'ADMIN' && order.country !== user.country) {
+            throw new Error("Unauthorized country access");
+        }
+
+        return this.prisma.order.update({
+            where: { id: orderId },
+            data: { status: 'CANCELLED' }
         });
     }
 }
