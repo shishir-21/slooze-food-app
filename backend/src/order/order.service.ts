@@ -76,4 +76,29 @@ export class OrderService {
             data: { status: 'CANCELLED' }
         });
     }
+
+    // Get orders based on role
+    async getOrders(user: any) {
+
+        // Admin → see all orders
+        if (user.role === 'ADMIN') {
+            return this.prisma.order.findMany({
+                include: { orderItems: true }
+            });
+        }
+
+        // Manager → country based
+        if (user.role === 'MANAGER') {
+            return this.prisma.order.findMany({
+                where: { country: user.country },
+                include: { orderItems: true }
+            });
+        }
+
+        // Member → only own orders
+        return this.prisma.order.findMany({
+            where: { userId: user.userId },
+            include: { orderItems: true }
+        });
+    }
 }
