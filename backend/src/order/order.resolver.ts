@@ -1,4 +1,4 @@
-import { Resolver, Mutation, Args, Context } from '@nestjs/graphql';
+import { Resolver, Mutation, Query, Args, Context } from '@nestjs/graphql';
 import { UseGuards } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { Order } from './entities/order.entity';
@@ -42,7 +42,7 @@ export class OrderResolver {
     const user = context.req.user;
     return this.orderService.checkoutOrder(orderId, user);
   }
-  
+
   @Mutation(() => Order)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('ADMIN', 'MANAGER') // Member not allowed
@@ -52,6 +52,20 @@ export class OrderResolver {
   ) {
     const user = context.req.user;
     return this.orderService.cancelOrder(orderId, user);
+  }
+
+
+  /**
+ * Query to fetch orders based on user permissions.
+ * Protected by JWT and Roles Guard.
+ */
+
+  @Query(() => [Order])
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('ADMIN', 'MANAGER', 'MEMBER')
+  getOrders(@Context() context) {
+    const user = context.req.user;
+    return this.orderService.getOrders(user);
   }
 
 }

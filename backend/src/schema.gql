@@ -33,6 +33,7 @@ type Query {
   sayHello: String!
   getRestaurants: [Restaurant!]!
   getMenu(restaurantId: String!): [MenuItem!]!
+  getOrders: [Order!]!
 }
 
 type Mutation {
