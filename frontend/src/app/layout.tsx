@@ -1,10 +1,6 @@
-"use client";
-
 import "./globals.css";
-import { ApolloProvider } from "@apollo/client";
-import { client } from "@/lib/apollo";
-import { AuthProvider } from "@/context/AuthContext";
-import { CartProvider } from "@/context/CartContext";
+import { Providers } from "./providers"; 
+
 
 export const metadata = {
   title: "Food Ordering App",
@@ -19,15 +15,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ApolloProvider client={client}>
-          <AuthProvider>
-            <CartProvider>
-              {children}
-            </CartProvider>
-          </AuthProvider>
-        </ApolloProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
-
 }
