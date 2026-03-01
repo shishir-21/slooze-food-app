@@ -8,7 +8,17 @@ export class OrderService {
 
     constructor(private prisma: PrismaService) { }
 
-    // Create new order
+    // Create a new empty order for a user
+    async createOrder(user: any) {
+        return this.prisma.order.create({
+            data: {
+                userId: user.userId,
+                country: user.country,
+            },
+        });
+    }
+
+
     async addItemToOrder(
         orderId: string,
         menuItemId: string,

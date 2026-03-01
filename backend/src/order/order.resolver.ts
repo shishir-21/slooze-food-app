@@ -11,6 +11,14 @@ export class OrderResolver {
 
   constructor(private orderService: OrderService) { }
 
+  // Add this to start a new order ---
+  @Mutation(() => Order)
+  @UseGuards(JwtAuthGuard)
+  async createOrder(@Context() context) {
+    const user = context.req.user;
+    return this.orderService.createOrder(user);
+  }
+
   @Mutation(() => String)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('ADMIN', 'MANAGER', 'MEMBER')

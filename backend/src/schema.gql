@@ -38,6 +38,7 @@ type Query {
 
 type Mutation {
   login(email: String!, password: String!): String!
+  createOrder: Order!
   addItemToOrder(orderId: String!, menuItemId: String!, quantity: Float!): String!
   checkoutOrder(orderId: String!): Order!
   cancelOrder(orderId: String!): Order!
