@@ -2,7 +2,8 @@
 
 import { useContext } from "react";
 import { AuthContext } from "@/context/AuthContext";
-import { gql, useQuery, useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client/react";
+import { gql } from "@apollo/client";
 import { CHECKOUT_ORDER, CANCEL_ORDER } from "@/graphql/mutations";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Navbar from "@/components/Navbar";

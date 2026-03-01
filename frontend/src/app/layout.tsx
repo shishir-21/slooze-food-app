@@ -1,6 +1,5 @@
 import "./globals.css";
-import { Providers } from "./providers"; 
-
+import Providers from "./provider";
 
 export const metadata = {
   title: "Food Ordering App",

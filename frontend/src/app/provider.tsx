@@ -1,21 +1,19 @@
-"use client"; // Enabling client-side features for this specific component tree
+"use client";
 
-import { ApolloProvider } from "@apollo/client";
+import { ApolloProvider } from "@apollo/client/react";
 import { client } from "@/lib/apollo";
 import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
 
-/**
- * Providers component wraps the application with necessary context providers.
- * Using a separate file allows the main layout to remain a Server Component.
- */
-export function Providers({ children }: { children: React.ReactNode }) {
+export default function Providers({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
-        <CartProvider>
-          {children}
-        </CartProvider>
+        <CartProvider>{children}</CartProvider>
       </AuthProvider>
     </ApolloProvider>
   );

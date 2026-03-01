@@ -7,7 +7,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import Navbar from "@/components/Navbar";
 
 // Apollo imports 
-import { useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client/react";
 import { CREATE_ORDER, ADD_ITEM_TO_ORDER, CHECKOUT_ORDER } from "@/graphql/mutations";
 import { useRouter } from "next/navigation";
 

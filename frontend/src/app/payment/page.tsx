@@ -1,7 +1,7 @@
 "use client";
 
 import { useContext, useState } from "react";
-import { useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client/react";
 import { ADD_PAYMENT_METHOD } from "@/graphql/mutations";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Navbar from "@/components/Navbar";

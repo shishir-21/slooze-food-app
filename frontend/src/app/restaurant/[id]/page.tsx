@@ -1,7 +1,8 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery } from "@apollo/client/react";
+import { gql } from "@apollo/client";
 import { useContext } from "react";
 import { CartContext } from "@/context/CartContext";
 import ProtectedRoute from "@/components/ProtectedRoute";

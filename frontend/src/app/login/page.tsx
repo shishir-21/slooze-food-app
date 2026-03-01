@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useContext } from "react";
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client/react";
+import { gql } from "@apollo/client";
 import { AuthContext } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 
