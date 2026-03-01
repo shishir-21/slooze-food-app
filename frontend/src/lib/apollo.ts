@@ -4,7 +4,7 @@
 import { ApolloClient, InMemoryCache, HttpLink } from "@apollo/client";
 
 const httpLink = new HttpLink({
-  uri: "http://localhost:3000/graphql", // Change if backend running on different port
+  uri: "http://localhost:4000/graphql", // Change if backend running on different port
   credentials: "include",
 });
 
