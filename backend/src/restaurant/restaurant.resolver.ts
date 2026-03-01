@@ -12,7 +12,7 @@ export class RestaurantResolver {
 
   constructor(private restaurantService: RestaurantService) {}
 
-  @Query(() => [Restaurant])
+  @Query(() => [Restaurant], {name: "restaurants"})
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('ADMIN', 'MANAGER', 'MEMBER')
   async getRestaurants(@Context() context) {

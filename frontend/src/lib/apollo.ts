@@ -1,14 +1,22 @@
-// Apollo Client configuration
-// This connects frontend to your NestJS GraphQL backend
-
-import { ApolloClient, InMemoryCache, HttpLink } from "@apollo/client";
+import { ApolloClient, InMemoryCache, HttpLink, ApolloLink } from "@apollo/client";
 
 const httpLink = new HttpLink({
-  uri: "http://localhost:4000/graphql", // Change if backend running on different port
-  credentials: "include",
+  uri: "http://localhost:4000/graphql",
+});
+
+const authLink = new ApolloLink((operation, forward) => {
+  const token = localStorage.getItem("token");
+
+  operation.setContext({
+    headers: {
+      Authorization: token ? `Bearer ${token}` : "",
+    },
+  });
+
+  return forward(operation);
 });
 
 export const client = new ApolloClient({
-  link: httpLink,
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
