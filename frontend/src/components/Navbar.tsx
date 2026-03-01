@@ -9,7 +9,7 @@ export default function Navbar() {
   // Accessing Authentication and Cart contexts
   const { user, logout } = useContext(AuthContext)!;
   const { cart } = useContext(CartContext)!;
-  
+
   // Calculating the total number of items currently in the cart
   const itemCount = cart.reduce((total, item) => total + item.quantity, 0);
 
@@ -20,14 +20,23 @@ export default function Navbar() {
         <Link href="/" className="font-bold text-xl text-orange-500">
           Slooze Food
         </Link>
-        
+
         {/* Navigation for Order History - Only visible if the user is logged in */}
         {user && (
           <Link href="/orders" className="hover:text-orange-500 font-medium transition-colors">
             Orders History
           </Link>
         )}
+
+        {/* 💳 NEW: Payment Config Link - ONLY visible for ADMIN */}
+        {user?.role === "ADMIN" && (
+          <Link href="/payment" className="hover:text-blue-400 font-medium transition-colors border-b-2 border-transparent hover:border-blue-400">
+            Payment Config
+          </Link>
+        )}
       </div>
+
+
 
       <div className="flex gap-6 items-center">
         {/* Cart Navigation with a dynamic badge showing item count */}
@@ -53,7 +62,7 @@ export default function Navbar() {
               <p className="text-gray-400 text-[10px] uppercase font-bold tracking-wider">Region</p>
               <p className="font-semibold text-blue-400">{user.country}</p>
             </div>
-            
+
             {/* Logout Trigger */}
             <button
               onClick={logout}
