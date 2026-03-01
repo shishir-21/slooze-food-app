@@ -13,3 +13,17 @@ export const GET_RESTAURANTS = gql`
     }
   }
 `;
+export const GET_RESTAURANT = gql`
+  query GetRestaurant($id: String!) {
+    restaurant(id: $id) {
+      id
+      name
+      country
+      menuItems {
+        id
+        name
+        price
+      }
+    }
+  }
+`;

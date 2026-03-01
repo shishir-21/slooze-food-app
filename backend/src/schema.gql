@@ -32,6 +32,7 @@ type PaymentMethod {
 type Query {
   sayHello: String!
   restaurants: [Restaurant!]!
+  restaurant(id: String!): Restaurant!
   getMenu(restaurantId: String!): [MenuItem!]!
   getOrders: [Order!]!
 }

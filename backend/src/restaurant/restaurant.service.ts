@@ -25,4 +25,23 @@ export class RestaurantService {
       }
     });
   }
+  // 🔹 Fetch single restaurant
+  async getRestaurant(id: string, user: any) {
+
+    const restaurant = await this.prisma.restaurant.findUnique({
+      where: { id },
+      include: { menuItems: true }
+    });
+
+    if (!restaurant) {
+      throw new Error("Restaurant not found");
+    }
+
+    // Country restriction
+    if (user.role !== 'ADMIN' && restaurant.country !== user.country) {
+      throw new Error("Unauthorized access");
+    }
+
+    return restaurant;
+  }
 }
