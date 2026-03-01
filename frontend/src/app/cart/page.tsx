@@ -8,7 +8,7 @@ import Navbar from "@/components/Navbar";
 
 // Apollo imports 
 import { useMutation } from "@apollo/client";
-import { CREATE_ORDER, ADD_ITEM_TO_ORDER } from "@/graphql/mutations";
+import { CREATE_ORDER, ADD_ITEM_TO_ORDER, CHECKOUT_ORDER } from "@/graphql/mutations";
 import { useRouter } from "next/navigation";
 
 export default function CartPage() {
@@ -18,6 +18,7 @@ export default function CartPage() {
 
     const [createOrder, { loading: creatingOrder }] = useMutation(CREATE_ORDER);
     const [addItemToOrder] = useMutation(ADD_ITEM_TO_ORDER);
+    const [checkoutOrder] = useMutation(CHECKOUT_ORDER);
 
     const total = cart.reduce(
         (sum, item) => sum + item.price * item.quantity,
