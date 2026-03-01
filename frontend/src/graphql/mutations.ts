@@ -51,3 +51,13 @@ export const ADD_PAYMENT_METHOD = gql`
     }
   }
 `;
+
+// Cancel an existing order (Manager/Admin Only)
+export const CANCEL_ORDER = gql`
+  mutation CancelOrder($orderId: String!) {
+    cancelOrder(orderId: $orderId) {
+      id
+      status
+    }
+  }
+`;
