@@ -2,17 +2,18 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Restaurant {
-  id: ID!
-  name: String!
-  country: String!
-}
-
 type MenuItem {
   id: ID!
   name: String!
   price: Float!
   restaurantId: String!
+}
+
+type Restaurant {
+  id: ID!
+  name: String!
+  country: String!
+  menuItems: [MenuItem!]
 }
 
 type Order {
