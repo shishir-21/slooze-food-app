@@ -10,6 +10,7 @@ import { RestaurantModule } from './restaurant/restaurant.module';
 import { MenuModule } from './menu/menu.module';
 import { OrderModule } from './order/order.module';
 import { PaymentModule } from './payment/payment.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { PaymentModule } from './payment/payment.module';
     PrismaModule, 
     // 2. Auth Module jisme login logic hai
     AuthModule,
+    UserModule,
     // 3. GraphQL Config (Iske bina playground nahi khulega)
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
