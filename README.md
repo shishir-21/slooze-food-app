@@ -54,4 +54,5 @@ Users can only access data related to their assigned country:
 
 ```bash
 git clone <your-repo-url>
-cd slooze-backend
+cd slooze-food-app
+cd backend
