@@ -32,29 +32,33 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex h-screen items-center justify-center">
-      <div className="bg-white p-6 rounded shadow-md w-80">
-        <h1 className="text-xl font-bold mb-4">Login</h1>
+    // Changed: Added p-4 to ensure there's a gap on the smallest phone screens
+    <div className="flex h-screen items-center justify-center p-4 bg-gray-50"> 
+      
+      {/* Changed: Replaced w-80 with w-full and max-w-sm for responsiveness */}
+      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm">
+        <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">Login</h1>
 
         <input
           type="email"
           placeholder="Email"
-          className="border p-2 w-full mb-2"
+          className="border border-gray-300 p-2 w-full mb-3 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           onChange={(e) => setEmail(e.target.value)}
         />
 
         <input
           type="password"
           placeholder="Password"
-          className="border p-2 w-full mb-4"
+          className="border border-gray-300 p-2 w-full mb-6 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           onChange={(e) => setPassword(e.target.value)}
         />
 
         <button
           onClick={handleLogin}
-          className="bg-blue-500 text-white w-full py-2 rounded"
+          // Changed: Added transition and hover effects to make it feel more "modern"
+          className="bg-blue-600 hover:bg-blue-700 text-white w-full py-2.5 rounded font-semibold transition-colors"
         >
-          Login
+          Sign In
         </button>
       </div>
     </div>
