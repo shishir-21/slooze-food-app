@@ -6,6 +6,9 @@ import { gql } from "@apollo/client";
 import { AuthContext } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 
+/** * GraphQL Mutation for Login 
+ * Returns a JWT string on success
+ */
 const LOGIN_MUTATION = gql`
   mutation Login($email: String!, $password: String!) {
     login(email: $email, password: $password)
@@ -16,19 +19,35 @@ export default function LoginPage() {
   const { login } = useContext(AuthContext)!;
   const router = useRouter();
 
+  // Component State
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false); // Track UI loading state
 
   const [loginMutation] = useMutation(LOGIN_MUTATION);
 
-  const handleLogin = async () => {
-    const res = await loginMutation({
-      variables: { email, password },
-    });
+  /**
+   * Handles the form submission
+   * Prevents default reload and executes the GraphQL mutation
+   */
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault(); 
+    setLoading(true);
 
-    const token = res.data.login;
-    login(token);
-    router.push("/");
+    try {
+      const res = await loginMutation({
+        variables: { email, password },
+      });
+
+      const token = res.data.login;
+      login(token); // Update global Auth context
+      router.push("/"); // Redirect to dashboard/home
+    } catch (err) {
+      console.error("Login failed:", err);
+      alert("Invalid credentials. Please check your email and password.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
